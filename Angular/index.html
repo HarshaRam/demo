@@ -1,0 +1,131 @@
+<html ng-app="myApp">
+<head>
+<title>Homepage</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+<script src="scripts/angular.min.js"></script>
+<script src="scripts/dirPagination.js"></script>
+<script src="scripts/app.js"></script>
+
+</head>
+<body ng-controller="myController">
+
+
+Original:<br>
+<div ng-repeat="data in jsonRequired | unique: 'status'">
+  <input type="checkbox" ng-checked="data.checked" ng-model="data.checked"/> %% data.status %%
+</div>
+
+<!--
+
+<!--
+ <br><br>
+Duplicate:<br>
+<div>
+  ng-checked="data.checked"
+  <input type="checkbox" ng-model="ordered" ng-checked="data.checked"/>ordered<br>
+  <input type="checkbox" ng-model="laundryexit" ng-checked="data.checked"/>laundry exit<br>
+  <input type="checkbox" ng-model="delivered" ng-checked="data.checked"/>delivered<br>
+  <input type="checkbox" ng-model="laundryentry" ng-checked="data.checked"/>laundry entry
+</div>
+
+-->
+<br>
+
+<div>
+<!--
+Search: <input type="text" ng-model="searchKeyWord"/> <br><br> -->
+  %% statusChecked %% <br><br>
+  %% selectedStatusDropdown %% <br><br>
+	<table border="1" cellpadding="3">
+
+  <tr bgcolor="#DCDCDC">
+    
+  <th>Order#<input type="text" ng-model="order_search"/></th>
+  <th>User Address<input type="text" ng-model="address_search"/></th>
+  <th>User Phone#</th>
+  
+
+<!-- 
+<th ng-hide="ordered">Delivery Date</th>
+  <th ng-hide="ordered">Delivery Time</th>
+
+-->
+  <th ng-hide="statusChecked === 'laundry exit'">Pick-up Date</th>
+  <th ng-hide="statusChecked === 'laundry exit'">Pick-up Time</th>
+  <th ng-hide="statusChecked === 'ordered'">Delivery Date</th>
+  <th ng-hide="statusChecked === 'ordered'">Delivery Time</th>
+  <th>Status
+  <select ng-model="selectedStatusDropdown" ng-change="getChanged()">
+    <option>All</option>
+    <option>Ordered</option>
+    <option>Delivered</option>
+    <option>Laundry Entry</option>
+    <option>Laundry Exit</option>
+ </select>
+  </th>
+  <th>Select <br>Delivery Boy</th>
+  <th>Save</th>
+  
+
+
+  </tr>
+
+
+
+
+  <tr dir-paginate="x in jsonRequired| selectedStatus |filter:{order_no: order_search, user_address: address_search,status:selectedStatusDropdown}| itemsPerPage:4"> 
+<!--  <tr ng-repeat="x in jsonRequired| orderBy: '-pickup_date': order_reverse :true | selectedStatus |filter:{order_no: order_search, user_address: address_search}"> 
+
+  <!-- {|orderBy: '-pickup_date': order_reverse :true" | filter:{order_no: order_search, user_address: address_search}--> 
+  
+    <td>%% x.order_no %%</td>
+    <td>%% x.user_address %%</td>
+    <td>%% x.user_phone_number %%</td>
+    
+
+    <td ng-hide="statusChecked === 'laundry exit'"> %% x.pickup_date | date : 'MMM dd,yyyy' %%</td>
+    <td ng-hide="statusChecked === 'laundry exit'"></td>%% x.pickup_time %%</td>
+    <td ng-hide="statusChecked === 'ordered'">%% x.delivery_date | date : 'MMM dd,yyyy' %%  </td>
+    <td ng-hide="statusChecked === 'ordered'">%% x.delivery_time %% </td>
+    <td>%% x.status %%</td>
+    <td>
+          <div>
+          %% x.delivery_boy_name %% &nbsp;&nbsp;
+          <img src="images/edit.png" width="18px"/>
+          </div>
+
+          <div>
+          <select ng-model="selectedItem" 
+                  ng-change="selectAction(selectedItem,x.order_no)"
+                  ng-options="option.name for option in x.delivery_boys">
+              <option value="">--Select--</option>
+        
+      </select>
+      </div>
+        
+    </td>
+   
+    <td>&nbsp;&nbsp;<span style="color:blue;cursor:pointer" ng-click="storeData($index,jsonRequired[$index],jsonRequired.length)"><img src="images/save.png" width="18px"/></span></td>
+  </tr>
+
+
+
+
+</table>
+
+<dir-pagination-controls
+       max-size="5"
+       direction-links="true"
+       boundary-links="true">
+</dir-pagination-controls>
+
+</div>
+</body>
+</html>
