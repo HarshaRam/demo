@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+<TITLE> New Document </TITLE>
+</HEAD>
+<scriptlanguage="vbscript">
+sub getCurrentDateTime()
+dim daydate,daytime
+daydate=FormatDateTime(Date(),1)
+dtime=Hour(Now)
+document.form1.txtdatetime.value=CStr(daydate)+" "+CStr(Time)
+end sub
+</script>
+<BODYbgcolor="lightblue"onLoad="getCurrentDateTime()">
+<formname="form1"onLoad="getCurrentDateTime()">
+<p><center><u>ALL RIGHT RESERVED.</u><center>
+<span>Copyright @ 2015, HyderabadCity.com</span><br/>
+<table>
+<tr></tr>
+<tr><td> Current Date & Time:</td><td><input type="text" name="txtdatetime"
+size="30" /></td><td></td>
+<tr></tr>
+</table>
+</form>
+</BODY>
+</HTML>
